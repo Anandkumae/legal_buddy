@@ -5,7 +5,8 @@ Edit
 # ⚖️ LegalBuddy – AI-Powered Legal Judgment Assistant
 
 LegalBuddy is an AI-powered legal assistant that helps lawyers, students, and researchers generate structured legal judgments from textual case descriptions using powerful open-source LLMs via OpenRouter.
-
+frontend link-https://legalbuddy-7x5xxdptt64jcwgm4ccatm.streamlit.app
+backend link-https://legal-buddy-2.onrender.com
 ## 🚀 Features
 
 - 🧠 **LLM Integration** (via OpenRouter) for smart judgment generation
