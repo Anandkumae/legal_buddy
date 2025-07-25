@@ -4,7 +4,6 @@ import streamlit as st
 import requests
 
 BACKEND_URL = "https://legal-buddy-2.onrender.com/generate-judgment"
-response = requests.post(BACKEND_URL, json={"prompt": user_input})
 
 st.set_page_config(page_title="LegalBuddy AI", layout="centered")
 
@@ -20,7 +19,7 @@ if st.button("Generate Judgment"):
         with st.spinner("Generating judgment..."):
             try:
                 response = requests.post(
-                    "http://localhost:8000/generate-judgment",
+                    BACKEND_URL,  # ✅ Now using the deployed backend
                     json={"prompt": case_description}
                 )
                 result = response.json()
