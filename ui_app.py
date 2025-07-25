@@ -3,6 +3,8 @@
 import streamlit as st
 import requests
 
+BACKEND_URL = "https://legal-buddy-2.onrender.com/generate-judgment"
+
 st.set_page_config(page_title="LegalBuddy AI", layout="centered")
 
 st.title("⚖️ LegalBuddy AI")
@@ -27,4 +29,4 @@ if st.button("Generate Judgment"):
             except Exception as e:
                 st.error(f"❌ Failed to connect to backend: {e}")
                 
-BACKEND_URL = "https://legalbuddy-backend.onrender.com/generate-judgment"
+
