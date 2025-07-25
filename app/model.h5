@@ -1,0 +1,19 @@
+from keras.models import Sequential
+from keras.layers import Dense
+import numpy as np
+
+# Dummy training data
+X = np.array([[0], [1], [2], [3], [4]])
+y = np.array([[0], [1], [4], [9], [16]])
+
+# Create model
+model = Sequential()
+model.add(Dense(10, input_dim=1, activation='relu'))
+model.add(Dense(1))
+
+# Compile and train
+model.compile(optimizer='adam', loss='mse')
+model.fit(X, y, epochs=100, verbose=0)
+
+# Save the model
+model.save('model.h5')
