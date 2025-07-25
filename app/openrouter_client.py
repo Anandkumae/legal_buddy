@@ -1,38 +1,33 @@
 import os
+import time
+from openrouter import OpenRouter
 from dotenv import load_dotenv
 
-# Load .env from root even when running from nested modules
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-env_path = os.path.join(root_dir, ".env")
-load_dotenv(dotenv_path=env_path)
+load_dotenv()
 
-API_KEY = os.getenv("OPENROUTER_API_KEY")
-
-if not API_KEY:
+api_key = os.getenv("OPENROUTER_API_KEY")
+if not api_key:
     raise ValueError("❌ OPENROUTER_API_KEY is missing from .env")
 
-import requests
+client = OpenRouter(api_key=api_key)
 
-headers = {
-    "Authorization": f"Bearer {API_KEY}",
-    "HTTP-Referer": "https://yourproject.com",
-    "X-Title": "Legal Buddy"
-}
+def query_llm(prompt, model="mistralai/mistral-7b-instruct", role="legal_assistant"):
+    system_prompt = "You are a legal assistant. Generate structured and formal legal judgments based on crime details."
+    try:
+        time.sleep(1)  # Avoid rate limit
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"❌ LLM query failed: {e}")
+        return "Judgment generation failed. Please try again later."
 
-def query_llm(prompt, model="mistralai/mistral-7b-instruct"):
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": "You are a legal assistant. Generate detailed and structured judgments."},
-            {"role": "user", "content": prompt}
-        ]
-    }
-    response = requests.post(url, json=payload, headers=headers)
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
-    else:
-        raise Exception(f"❌ API call failed: {response.status_code} - {response.text}")
 
 
 
