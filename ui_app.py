@@ -4,6 +4,7 @@ import streamlit as st
 import requests
 
 BACKEND_URL = "https://legal-buddy-2.onrender.com/generate-judgment"
+response = requests.post(BACKEND_URL, json={"prompt": user_input})
 
 st.set_page_config(page_title="LegalBuddy AI", layout="centered")
 
